@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="signUp">
+	<insert id="signUpInsert" parameterType="signUp">
+		INSERT INTO TB_SIGNUP(SIGNUPSEQ, ID, NAME, PW, EMAIL, ZIPCODE, ADDRESS, ADDRESSDETAIL, REGDATE, UPDATED)
+		VALUES(SEQ_TB_SIGNUP.NEXTVAL, #{id}, #{name}, #{pw}, #{email}, #{zipCode}, #{address}, #{addressDetail}, #{regDate}, #{upDated})
+	</insert>
+</mapper>

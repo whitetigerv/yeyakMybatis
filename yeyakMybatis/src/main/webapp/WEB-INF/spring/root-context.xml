@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Root Context: 다른 모든 웹 구성 요소에 표시되는 공유 리소스를 정의합니다. -->	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+
+	<!-- 설정값들은 property로 가져온다는 의미 	-->
+	<context:property-placeholder location="classpath:/config/rootConfig.properties"/> 	
+	
+	<!-- 데이터베이스 연결 -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.id}" />
+		<property name="password" value="${jdbc.pw}" />
+	</bean>
+	
+	<!-- MyBatis 기본 설정	SqlSession -->	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+		<!-- 데이터 소스  연결 -->
+		<property name="dataSource" ref="dataSource" /> 	
+		<!--  MyBatis 설정 파일의 위치를 지정합니다.	 -->
+		<property name="configLocation" value="classpath:/mybatis/config/mybatis-config.xml" /> 
+		<!-- Mybatis Mapper 설정 파일 위치 -->
+		<property name="mapperLocations" value="classpath:/mybatis/mapper/*.xml" /> 
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+ 		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	
+	<!-- 태그를 사용해서 스프링이 클래스를 검색할 패키지를 지정  	태그는 해당 패키지에서 @Component 어노테이션이(또는 하위 어노테이션) 적용된 클래스를 검색하여 빈으로 자동등록 -->
+	<context:component-scan base-package="com.cop.*" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>	
+		
+</beans>

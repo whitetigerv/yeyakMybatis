@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Valid 한 설정 xml을 만들기 위해 DTD를 추가해 줍니다. -->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- Value Object 설정 -->
+	<typeAliases>
+		<typeAlias alias="signUp" type="com.cop.signUp.service.model.SignUp"/>
+	</typeAliases>
+	
+	
+  	<!-- SQL Mapper설정  (이곳에 Mapper 설정을 해주거나 , root-context에서 설정해준다.)
+    <mappers> 
+    	<mapper resource="mybatis/mapper/board-mapper.xml"/>
+    </mappers>   
+    -->
+</configuration>
